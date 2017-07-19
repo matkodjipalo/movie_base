@@ -12,15 +12,15 @@ class RoleType
      * @var array
      */
     private static $supported = [
-        'actor',
-        'director',
-        'writer',
-        'producer',
-        'executive_producer',
-        'production_manager',
-        'casting_director',
-        'art_director',
-        'costume_designer',
+        'actor' => 'Actor',
+        'director' => 'Director',
+        'writer' => 'Writer',
+        'producer' => 'Producer',
+        'executive_producer' => 'Executive producer',
+        'production_manager' => 'Production manager',
+        'casting_director' => 'Casting director',
+        'art_director' => 'Art director',
+        'costume_designer' => 'Costume designer',
     ];
 
     /**

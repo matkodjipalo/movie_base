@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Edit Person</h1>
+                {{ form_start(movieForm) }}
+                {{ form_row(movieForm.title) }}
+                {{ form_row(movieForm.releaseYear) }}
+                {{ form_row(movieForm.description) }}
+                <button type="submit" class="btn btn-primary" formnovalidate>Save</button>
+                {{ form_end(movieForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

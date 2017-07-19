@@ -4,7 +4,7 @@ namespace AppBundle\Form\Type;
 
 
 use AppBundle\Entity\Movie;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,14 +17,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MovieFormType extends AbstractType
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -74,7 +74,13 @@ class MovieFormType extends AbstractType
                 'releaseYear' => $releaseYear
             ]);
 
-        if (!empty($movie)) {
+        if (empty($movie)) {
+            return;
+        }
+
+        $currentMovieId = $event->getForm()->getData() ? $event->getForm()->getData()->getId() : null;
+        $movie = array_pop($movie);
+        if ($movie->getId() != $currentMovieId) {
             $event->getForm()->addError(
                 new FormError('Movie with the title' . $title . ' and release year ' . $releaseYear . ' already exists.')
             );

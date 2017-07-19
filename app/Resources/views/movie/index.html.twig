@@ -23,6 +23,9 @@
                                 <td>{{ movie.title }}</td>
                                 <td>{{ movie.releaseYear }}</td>
                                 <td>{{ movie.description }}</td>
+                                <td>
+                                    <a href="{{ path('movie_edit', {'id': movie.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

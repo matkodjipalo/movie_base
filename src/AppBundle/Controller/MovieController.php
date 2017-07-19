@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Movie;
 use AppBundle\Form\Type\MovieFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,13 +36,38 @@ class MovieController extends Controller
     }
 
     /**
+     * @Route("/movies/{id}/edit", name="movie_edit")
+     */
+    public function editAction(Request $request, Movie $movie)
+    {
+        $form = $this->createForm(MovieFormType::class, $movie);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $person = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($person);
+            $em->flush();
+
+            $this->addFlash('success', 'Movie updated!');
+
+            return $this->redirectToRoute('movie_list');
+        }
+
+        return $this->render('movie/edit.html.twig', [
+            'movieForm' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/movies", name="movie_list")
      */
     public function indexAction(Request $request)
     {
         return $this->render('movie/index.html.twig', [
             'movies' => $this->getDoctrine()->getRepository('AppBundle:Movie')
-                ->findAll(),
+                ->findBy([], ['id' => 'DESC']),
         ]);
     }
 }
