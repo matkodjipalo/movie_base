@@ -4,10 +4,8 @@ namespace AppBundle\Form\Type;
 
 
 use AppBundle\Entity\CastAndCrew;
-use AppBundle\Entity\Movie;
 use AppBundle\Entity\Person;
 use AppBundle\Enum\RoleType;
-use AppBundle\Repository\CastAndCrewRepository;
 use AppBundle\Repository\PersonRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
