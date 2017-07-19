@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="cast_and_crew", uniqueConstraints={
- *     @ORM\UniqueConstraint(name="person_movie_role_unique", columns={"person_id", "movie_id", "role"})
+ *     @ORM\UniqueConstraint(name="person_movie_role_unique", columns={"person_id", "movie_id", "role"}, options={"length": 700})
  * }))
  */
 class CastAndCrew
@@ -34,7 +34,7 @@ class CastAndCrew
     private $movie;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=80)
      * @Assert\NotBlank()
      */
     private $role;

@@ -22,7 +22,7 @@ class Movie
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=175)
      * @Assert\NotBlank()
      */
     private $title;
@@ -34,7 +34,7 @@ class Movie
     private $releaseYear;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
