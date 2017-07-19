@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+    <section>
+        <h1 class="text-center">Movie List</h1>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                {% if movies %}
+                    <h2>Current movies:</h2>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Release Year</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody id="ajax_html_part">
+                        {% for movie in movies %}
+                            <tr>
+                                <td>{{ movie.title }}</td>
+                                <td>{{ movie.releaseYear }}</td>
+                                <td>{{ movie.description }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <p class="text-right">
+                        <a href="{{ path('new_movie') }}">New Movie</a>
+                    </p>
+                {% else %}
+                    <p class="text-center">
+                        <br><br><br>
+                        Currently, there are no movies in database, but you can add a <a href="{{ path('new_movie') }}">first movie</a>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

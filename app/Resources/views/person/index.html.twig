@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+    <section>
+        <h1 class="text-center">Person List</h1>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                {% if persons %}
+                    <h2>Current persons:</h2>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Date of birth</th>
+                        </tr>
+                        </thead>
+                        <tbody id="ajax_html_part">
+                        {% for person in persons %}
+                            <tr>
+                                <td>{{ person.firstName }}</td>
+                                <td>{{ person.lastName }}</td>
+                                <td>{{ person.dateOfBirth|date("m/d/Y") }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <p class="text-right">
+                        <a href="{{ path('new_person') }}">New Person</a>
+                    </p>
+                {% else %}
+                    <p class="text-center">
+                        <br><br><br>
+                        Currently, there are no persons in database, but you can add a <a href="{{ path('new_person') }}">first person</a>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
