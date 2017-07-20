@@ -20,12 +20,16 @@ class PersonController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $person = $form->getData();
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($person);
             $em->flush();
 
             $this->addFlash('success', 'Person saved!');
+
+            $returnPath = $request->query->get('returnPath');
+            if ($returnPath) {
+                return $this->redirect($returnPath);
+            }
 
             return $this->redirectToRoute('person_list');
         }
