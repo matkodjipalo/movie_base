@@ -20,6 +20,11 @@ class Person
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="CastAndCrew", mappedBy="person", cascade={"remove"})
+     */
+    private $castAndCrew;
+
+    /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */

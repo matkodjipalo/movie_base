@@ -22,6 +22,11 @@ class Movie
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="CastAndCrew", mappedBy="movie", cascade={"remove"})
+     */
+    private $castAndCrew;
+
+    /**
      * @ORM\Column(type="string", length=175)
      * @Assert\NotBlank()
      */

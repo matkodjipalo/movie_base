@@ -22,13 +22,13 @@ class CastAndCrew
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Person")
+     * @ORM\ManyToOne(targetEntity="Person", inversedBy="castAndCrew", fetch="EAGER")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $person;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Movie")
+     * @ORM\ManyToOne(targetEntity="Movie", inversedBy="castAndCrew")
      * @ORM\JoinColumn(name="movie_id", referencedColumnName="id")
      */
     private $movie;
