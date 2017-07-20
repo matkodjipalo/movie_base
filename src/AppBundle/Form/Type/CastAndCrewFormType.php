@@ -6,15 +6,32 @@ namespace AppBundle\Form\Type;
 use AppBundle\Entity\CastAndCrew;
 use AppBundle\Entity\Person;
 use AppBundle\Enum\RoleType;
-use AppBundle\Repository\PersonRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CastAndCrewFormType extends AbstractType
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @inheritdoc
      */
@@ -25,9 +42,10 @@ class CastAndCrewFormType extends AbstractType
                 'disabled' => $options['is_edit'],
                 'placeholder' => 'Choose a person for movie cast and crew',
                 'class' => Person::class,
-                'query_builder' => function(PersonRepository $repo) use ($options) {
+                'query_builder' => function(EntityRepository $repo) use ($options) {
                     if (false === $options['is_edit']) {
-                        return $repo->createAlphabeticalQueryBuilder($options['movie']);
+                        return $repo->createQueryBuilder('p')
+                            ->orderBy('p.lastName', 'ASC');
                     }
                 },
                 'choice_label' => function ($person) {
@@ -36,7 +54,11 @@ class CastAndCrewFormType extends AbstractType
             ])
             ->add('role', ChoiceType::class, [
                 'choices' => array_flip(RoleType::getAll())
-            ]);
+            ])
+            ->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                array($this, 'checkIfPersonWithRoleAlreadyExists')
+            );
     }
 
     /**
@@ -49,5 +71,27 @@ class CastAndCrewFormType extends AbstractType
             'movie' => null,
             'is_edit' => false
         ));
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function checkIfPersonWithRoleAlreadyExists(FormEvent $event)
+    {
+        $submittedData = $event->getData();
+        $personId = $submittedData['person'] ?? null;
+        $role = $submittedData['role'] ?? null;
+
+        $personWithRole = $this->em->getRepository('AppBundle:CastAndCrew')
+            ->findBy([
+                'person' => $personId,
+                'role' => $role
+            ]);
+
+        if (!empty($personWithRole)) {
+            $event->getForm()->addError(
+                new FormError('This person with this role is already part of movie cast and crew')
+            );
+        }
     }
 }
