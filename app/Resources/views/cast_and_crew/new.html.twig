@@ -7,7 +7,11 @@
                 {{ form_start(castAndCrewForm) }}
                 {{ form_widget(castAndCrewForm) }}
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a class="btn btn-xs btn-success pull-right" href="{{ path('new_person') }}">+ CreateNew Person</a>
+                <a class="btn btn-xs btn-success pull-right"
+                   href="{{ path('new_person', {
+                       'returnPath': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))}) }}">
+                    + CreateNew Person
+                </a>
                 {{ form_end(castAndCrewForm) }}
 
             </div>
