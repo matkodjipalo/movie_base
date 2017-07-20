@@ -23,7 +23,9 @@ class PersonRepository extends EntityRepository
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'p.id = cnc.person'
             )
-            ->where('cnc.person IS NULL')
+            ->where('cnc.movie <> :movie')
+            ->orWhere('cnc.person IS NULL')
+            ->setParameter('movie', $movie)
             ->orderBy('p.lastName', 'ASC');
     }
 }
