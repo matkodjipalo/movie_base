@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Person;
 use AppBundle\Form\Type\PersonFormType;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,9 +85,16 @@ class PersonController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $page = $request->query->get('page', 1);
+
+        $qb = $this->getDoctrine()->getRepository('AppBundle:Person')->findAllQueryBuilder();
+
+        $adapter = new DoctrineORMAdapter($qb);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setCurrentPage($page);
+
         return $this->render('person/index.html.twig', [
-            'persons' => $this->getDoctrine()->getRepository('AppBundle:Person')
-                ->findBy([], ['id' => 'DESC']),
+            'persons' => $pagerfanta,
         ]);
     }
 }

@@ -18,6 +18,10 @@
                         </tr>
                         </thead>
                         <tbody id="ajax_html_part">
+                        <a class="btn btn-xs btn-info pull-right"
+                           href="{{ path('person_list') }}">
+                            Person List
+                        </a>
                         {% for movie in movies %}
                             <tr>
                                 <td>{{ movie.title }}</td>
@@ -36,6 +40,9 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    <div class="pagerfanta">
+                        {{ pagerfanta(movies, 'twitter_bootstrap3', { 'omitFirstPage': true }) }}
+                    </div>
                     <p class="text-right">
                         <a href="{{ path('new_movie') }}" class="btn btn-xs btn-success">+ New Movie</a>
                     </p>

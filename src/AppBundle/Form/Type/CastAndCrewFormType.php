@@ -54,11 +54,25 @@ class CastAndCrewFormType extends AbstractType
             ])
             ->add('role', ChoiceType::class, [
                 'choices' => array_flip(RoleType::getAll())
-            ])
-            ->addEventListener(
-                FormEvents::PRE_SUBMIT,
-                array($this, 'checkIfPersonWithRoleAlreadyExists')
-            );
+            ]);
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
+                $submittedData = $event->getData();
+                $personId = $submittedData['person'] ?? null;
+                $role = $submittedData['role'] ?? null;
+                $personWithRole = $this->em->getRepository('AppBundle:CastAndCrew')
+                    ->findBy([
+                        'person' => $personId,
+                        'role' => $role,
+                        'movie' => $options['movie']
+                    ]);
+
+                if (!empty($personWithRole)) {
+                    $event->getForm()->addError(
+                        new FormError('This person with this role is already part of movie cast and crew')
+                    );
+                }
+            });
     }
 
     /**
@@ -71,27 +85,5 @@ class CastAndCrewFormType extends AbstractType
             'movie' => null,
             'is_edit' => false
         ));
-    }
-
-    /**
-     * @param FormEvent $event
-     */
-    public function checkIfPersonWithRoleAlreadyExists(FormEvent $event)
-    {
-        $submittedData = $event->getData();
-        $personId = $submittedData['person'] ?? null;
-        $role = $submittedData['role'] ?? null;
-
-        $personWithRole = $this->em->getRepository('AppBundle:CastAndCrew')
-            ->findBy([
-                'person' => $personId,
-                'role' => $role
-            ]);
-
-        if (!empty($personWithRole)) {
-            $event->getForm()->addError(
-                new FormError('This person with this role is already part of movie cast and crew')
-            );
-        }
     }
 }

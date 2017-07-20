@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MovieRepository")
  * @ORM\Table(name="movie", uniqueConstraints={
  *     @ORM\UniqueConstraint(name="tile_release_year_unique", columns={"title", "release_year"})
  * })

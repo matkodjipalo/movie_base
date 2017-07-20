@@ -33,9 +33,11 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    <div class="pagerfanta">
+                        {{ pagerfanta(persons, 'twitter_bootstrap3', { 'omitFirstPage': true }) }}
+                    </div>
                     <p class="text-right">
                         <a href="{{ path('new_person') }}" class="btn btn-xs btn-success">+ New Person</a>
-
                     </p>
                 {% else %}
                     <p class="text-center">

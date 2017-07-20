@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Movie;
 use AppBundle\Form\Type\MovieFormType;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,11 +79,17 @@ class MovieController extends Controller
     /**
      * @Route("/movies", name="movie_list")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $page = $request->query->get('page', 1);
+
+        $qb = $this->getDoctrine()->getRepository('AppBundle:Movie')->findAllQueryBuilder();
+        $adapter = new DoctrineORMAdapter($qb);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setCurrentPage($page);
+
         return $this->render('movie/index.html.twig', [
-            'movies' => $this->getDoctrine()->getRepository('AppBundle:Movie')
-                ->findBy([], ['id' => 'DESC']),
+            'movies' => $pagerfanta,
         ]);
     }
 }
