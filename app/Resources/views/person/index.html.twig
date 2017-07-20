@@ -26,12 +26,16 @@
                                 <td>
                                     <a href="{{ path('person_edit', {'id': person.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
                                 </td>
+                                <td>
+                                    <a href="{{ path('person_delete', {'id': person.id}) }}" class="btn btn-xs btn-danger"><span class="fa fa-trash-o fa-fw"></span></a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                     <p class="text-right">
-                        <a href="{{ path('new_person') }}">New Person</a>
+                        <a href="{{ path('new_person') }}" class="btn btn-xs btn-success">+ New Person</a>
+
                     </p>
                 {% else %}
                     <p class="text-center">

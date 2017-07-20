@@ -61,9 +61,23 @@ class MovieController extends Controller
     }
 
     /**
+     * @Route("/movies/{id}/delete", name="movie_delete")
+     */
+    public function deleteAction(Movie $movie)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($movie);
+        $em->flush();
+
+        $this->addFlash('success', 'Movie successfully deleted!');
+
+        return $this->redirectToRoute('movie_list');
+    }
+
+    /**
      * @Route("/movies", name="movie_list")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         return $this->render('movie/index.html.twig', [
             'movies' => $this->getDoctrine()->getRepository('AppBundle:Movie')

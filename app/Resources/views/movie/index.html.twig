@@ -26,12 +26,18 @@
                                 <td>
                                     <a href="{{ path('movie_edit', {'id': movie.id}) }}" class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
                                 </td>
+                                <td>
+                                    <a href="{{ path('movie_delete', {'id': movie.id}) }}" class="btn btn-xs btn-danger"><span class="fa fa-trash-o fa-fw"></span></a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('movie_cast_and_crew_list', {'id': movie.id}) }}" >Cast and Crew</a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                     <p class="text-right">
-                        <a href="{{ path('new_movie') }}">New Movie</a>
+                        <a href="{{ path('new_movie') }}" class="btn btn-xs btn-success">+ New Movie</a>
                     </p>
                 {% else %}
                     <p class="text-center">

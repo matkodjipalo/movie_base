@@ -22,10 +22,13 @@ class CastAndCrewFormType extends AbstractType
     {
         $builder
             ->add('person', EntityType::class, [
+                'disabled' => $options['is_edit'],
                 'placeholder' => 'Choose a person for movie cast and crew',
                 'class' => Person::class,
                 'query_builder' => function(PersonRepository $repo) use ($options) {
-                    return $repo->createAlphabeticalQueryBuilder($options['movie']);
+                    if (false === $options['is_edit']) {
+                        return $repo->createAlphabeticalQueryBuilder($options['movie']);
+                    }
                 },
                 'choice_label' => function ($person) {
                     return $person->getFirstName() . ' ' . $person->getLastName();
@@ -43,7 +46,8 @@ class CastAndCrewFormType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => CastAndCrew::class,
-            'movie' => null
+            'movie' => null,
+            'is_edit' => false
         ));
     }
 }

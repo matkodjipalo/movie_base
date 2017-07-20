@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Edit Movie Cast and Crew Member</h1>
+                {{ form_start(castAndCrewForm) }}
+                {{ form_row(castAndCrewForm.person) }}
+                {{ form_row(castAndCrewForm.role) }}
+                <button type="submit" class="btn btn-primary" formnovalidate>Save</button>
+                {{ form_end(castAndCrewForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

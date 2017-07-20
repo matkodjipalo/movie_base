@@ -61,6 +61,20 @@ class PersonController extends Controller
     }
 
     /**
+     * @Route("/person/{id}/delete", name="person_delete")
+     */
+    public function deleteAction(Person $person)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($person);
+        $em->flush();
+
+        $this->addFlash('success', 'Person successfully deleted!');
+
+        return $this->redirectToRoute('person_list');
+    }
+
+    /**
      * @Route("/persons", name="person_list")
      */
     public function indexAction(Request $request)
