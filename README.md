@@ -4,7 +4,7 @@
 ### Installation
 
 ```sh
- git clone https://github.com/matkodjipalo/movie_base.git
+$ git clone https://github.com/matkodjipalo/movie_base.git
 $ cd movie_base/
 $ composer install
 ```
