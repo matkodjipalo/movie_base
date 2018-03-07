@@ -20,9 +20,9 @@ class Person
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="CastAndCrew", mappedBy="person", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="MovieCastMember", mappedBy="person", cascade={"remove"})
      */
-    private $castAndCrew;
+    private $movieCastMember;
 
     /**
      * @ORM\Column(type="string")

@@ -3,7 +3,7 @@
 namespace AppBundle\Form\Type;
 
 
-use AppBundle\Entity\CastAndCrew;
+use AppBundle\Entity\MovieCastMember;
 use AppBundle\Entity\Person;
 use AppBundle\Enum\RoleType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CastAndCrewFormType extends AbstractType
+class MovieCastMemberFormType extends AbstractType
 {
     /**
      * @var EntityManagerInterface
@@ -60,7 +60,7 @@ class CastAndCrewFormType extends AbstractType
                 $submittedData = $event->getData();
                 $personId = $submittedData['person'] ?? null;
                 $role = $submittedData['role'] ?? null;
-                $personWithRole = $this->em->getRepository('AppBundle:CastAndCrew')
+                $personWithRole = $this->em->getRepository('AppBundle:MovieCastMember')
                     ->findBy([
                         'person' => $personId,
                         'role' => $role,
@@ -81,7 +81,7 @@ class CastAndCrewFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => CastAndCrew::class,
+            'data_class' => MovieCastMember::class,
             'movie' => null,
             'is_edit' => false
         ));

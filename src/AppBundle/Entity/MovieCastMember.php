@@ -8,11 +8,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="cast_and_crew", uniqueConstraints={
+ * @ORM\Table(name="movie_cast_member", uniqueConstraints={
  *     @ORM\UniqueConstraint(name="person_movie_role_unique", columns={"person_id", "movie_id", "role"})
  * }))
  */
-class CastAndCrew
+class MovieCastMember
 {
     /**
      * @ORM\Id
@@ -22,13 +22,13 @@ class CastAndCrew
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Person", inversedBy="castAndCrew", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Person", inversedBy="movieCastMember", fetch="EAGER")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $person;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Movie", inversedBy="castAndCrew")
+     * @ORM\ManyToOne(targetEntity="Movie", inversedBy="movieCastMember")
      * @ORM\JoinColumn(name="movie_id", referencedColumnName="id")
      */
     private $movie;
@@ -54,7 +54,7 @@ class CastAndCrew
      *
      * @param string $role
      *
-     * @return CastAndCrew
+     * @return MovieCastMember
      */
     public function setRole($role)
     {
@@ -76,11 +76,11 @@ class CastAndCrew
     /**
      * Set person
      *
-     * @param \AppBundle\Entity\Person $person
+     * @param Person $person
      *
-     * @return CastAndCrew
+     * @return MovieCastMember
      */
-    public function setPerson(\AppBundle\Entity\Person $person = null)
+    public function setPerson(Person $person = null)
     {
         $this->person = $person;
 
@@ -90,7 +90,7 @@ class CastAndCrew
     /**
      * Get person
      *
-     * @return \AppBundle\Entity\Person
+     * @return Person
      */
     public function getPerson()
     {
@@ -100,11 +100,11 @@ class CastAndCrew
     /**
      * Set movie
      *
-     * @param \AppBundle\Entity\Movie $movie
+     * @param Movie $movie
      *
-     * @return CastAndCrew
+     * @return MovieCastMember
      */
-    public function setMovie(\AppBundle\Entity\Movie $movie = null)
+    public function setMovie(Movie $movie = null)
     {
         $this->movie = $movie;
 
@@ -114,7 +114,7 @@ class CastAndCrew
     /**
      * Get movie
      *
-     * @return \AppBundle\Entity\Movie
+     * @return Movie
      */
     public function getMovie()
     {

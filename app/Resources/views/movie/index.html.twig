@@ -34,7 +34,7 @@
                                     <a href="{{ path('movie_delete', {'id': movie.id}) }}" class="btn btn-xs btn-danger"><span class="fa fa-trash-o fa-fw"></span></a>
                                 </td>
                                 <td>
-                                    <a href="{{ path('movie_cast_and_crew_list', {'id': movie.id}) }}" >Cast and Crew</a>
+                                    <a href="{{ path('movie_cast_member_list', {'id': movie.id}) }}" >Cast and Crew</a>
                                 </td>
                             </tr>
                         {% endfor %}

@@ -24,24 +24,24 @@
                                 <td>{{ cnc.person.lastName }}</td>
                                 <td>{{ cnc.role }}</td>
                                 <td>
-                                    <a href="{{ path('edit_movie_cast_and_crew_item', {'movie': movie.id, 'id': cnc.id}) }}" class="btn btn-xs btn-success">
+                                    <a href="{{ path('edit_movie_cast_member', {'movie': movie.id, 'id': cnc.id}) }}" class="btn btn-xs btn-success">
                                         <span class="fa fa-pencil"></span>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ path('movie_cast_and_crew_delete', {'movie': movie.id, 'id': cnc.id}) }}" class="btn btn-xs btn-danger"><span class="fa fa-trash-o fa-fw"></span></a>
+                                    <a href="{{ path('movie_cast_member_delete', {'movie': movie.id, 'id': cnc.id}) }}" class="btn btn-xs btn-danger"><span class="fa fa-trash-o fa-fw"></span></a>
                                 </td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                     <p class="text-right">
-                        <a href="{{ path('new_movie_cast_and_crew', {'id': movie.id}) }}" class="btn btn-xs btn-success">+ Add person to the cast and crew</a>
+                        <a href="{{ path('new_movie_cast_member', {'id': movie.id}) }}" class="btn btn-xs btn-success">+ Add person to the cast and crew</a>
                     </p>
                 {% else %}
                     <p class="text-center">
                         <br><br><br>
-                        Currently, this movie has no cast and crew, but you can add a <a href="{{ path('new_movie_cast_and_crew', {'id': movie.id}) }}">first member</a>
+                        Currently, this movie has no cast and crew, but you can add a <a href="{{ path('new_movie_cast_member', {'id': movie.id}) }}">first member</a>
                     </p>
                 {% endif %}
             </div>
